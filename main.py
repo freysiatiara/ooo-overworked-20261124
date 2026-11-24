@@ -24,6 +24,12 @@ def main() -> int:
     if "\n" in LINE or "\r" in LINE:
         print("error: reply must be a single line", file=sys.stderr)
         return 1
+    if any(ord(ch) < 32 and ch != "\t" for ch in LINE):
+        print(
+            "error: reply must not contain control characters",
+            file=sys.stderr,
+        )
+        return 1
     if not 1 <= len(LINE) <= 159:
         print(
             "error: reply must be 1..159 characters, got %d" % len(LINE),
